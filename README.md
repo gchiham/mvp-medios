@@ -44,9 +44,15 @@ Estas reglas gobiernan todo el sistema:
 
 ## 🔁 Flujo del sistema
 
-1. **Audio crudo** 2. **Transcripción** (WhisperX, palabra por palabra)  
+1. **Audio crudo** 
+2. **Transcripción** (WhisperX, palabra por palabra)  
 3. **Chunks de palabras** (texto, sin timestamps)  
-4. **Análisis narrativo con LLM** 5. **Reglas automáticas del sistema** 6. **Mapeo palabra → tiempo real** 7. **Clipping exacto de audio** 8. **Resumen final corregido** ---
+4. **Análisis narrativo con LLM** 
+5. **Reglas automáticas del sistema** 
+6. **Mapeo palabra → tiempo real** 
+7. **Clipping exacto de audio** 
+8. **Resumen final corregido** 
+---
 
 ## 📁 Estructura del proyecto
 
