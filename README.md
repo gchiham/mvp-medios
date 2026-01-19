@@ -75,3 +75,104 @@ mvp-medios/
 ├── temp/
 │
 └── README.md
+
+**Cada archivo tiene una sola responsabilidad clara.**
+
+🟦 1. Transcripción de audio
+----------------------------
+
+### transcribe\_audio.py
+
+**Responsabilidad:** Convertir audio continuo en una lista ordenada de palabras con timestamps.**Entrada:** Archivo de audio (radio, TV, podcast)**Salida (Ejemplo):**
+
+JSON
+
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   [    { "index": 0, "word": "buenos", "start": 0.52, "end": 0.71 },    { "index": 1, "word": "días", "start": 0.72, "end": 0.93 }  ]   `
+
+**Reglas clave:**
+
+*   Timestamp por palabra.
+    
+*   Output inmutable.
+    
+*   WhisperX es la verdad absoluta temporal.
+    
+
+🟨 2. Chunking por palabras (NO audio)
+--------------------------------------
+
+### chunk\_words.py
+
+**Responsabilidad:** Dividir la transcripción en grupos secuenciales de palabras para el análisis narrativo.**Qué es un chunk:** Un rango de índices de palabras, no segundos ni audio.
+
+**Ejemplo:** Chunk 1 -> palabras 0-499 | Chunk 2 -> palabras 500-999**Reglas:** Sin solape, sin timestamps, solo índice + palabra.
+
+🟧 3. Análisis narrativo con LLM
+--------------------------------
+
+### analyze\_narrative\_llm.py
+
+**Rol del LLM:** Identificar dónde empieza y termina cada noticia a nivel narrativo y generar un resumen inicial.**Salida del LLM (Ejemplo):**
+
+JSON
+
+Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   [    {      "start_word": 320,      "end_word": 498,      "summary": "Nasri criticó al CNE por el proceso electoral."    }  ]   `
+
+**Restricciones:** El LLM entiende historias, no tiempo. No produce timestamps ni decide duración.
+
+⚙️ 4. Decisiones automáticas del sistema
+----------------------------------------
+
+### apply\_rules.py
+
+**Responsabilidad:** Convertir propuestas del LLM en decisiones finales mediante lógica de negocio.**Reglas:** Duración mínima/máxima, continuidad entre chunks, marcadores explícitos.**El LLM propone. El sistema decide.**
+
+🟦 5. Mapeo de palabras a tiempo real
+-------------------------------------
+
+### map\_words\_to\_time.py
+
+**Responsabilidad:** Traducir índices de palabras a segundos reales usando la data inmutable de WhisperX.**Proceso:** start\_time = words\[start\_word\].start | end\_time = words\[end\_word\].end**Nota:** Paso determinista, reproducible y auditable.
+
+🟥 6. Clipping de audio
+-----------------------
+
+### clip\_audio.py
+
+**Responsabilidad:** Cortar audio exactamente donde el sistema lo indica usando FFmpeg. No analiza texto, solo ejecuta cortes técnicos.
+
+🟪 7. Resumen final y corrección editorial
+------------------------------------------
+
+### summarize\_news.py / correct\_entities.py
+
+**Responsabilidad:** Entregar el resumen final para consumo humano usando dictionary.json.**Reglas estrictas:**
+
+*   ✅ Corregir errores ortográficos de nombres propios.
+    
+*   ✅ Normalizar variantes conocidas.
+    
+*   ❌ No expande nombres ni introduce información nueva.
+    
+
+🧠 Manejo de múltiples periodistas
+----------------------------------
+
+*   Se aceptan interrupciones y solapamientos.
+    
+*   El speaker NO define cortes. El tema manda.
+    
+*   La historia es más importante que la pureza del audio.
+    
+
+📤 Output final
+---------------
+
+Por cada noticia detectada: Clip exacto de audio, Resumen corregido, Inicio y fin reales (segundos) y Texto legible.
+
+🧪 Estado del proyecto
+----------------------
+
+Este repositorio define un MVP técnico sólido: escalable, auditable, determinista y mantenible.
+
+> **"El LLM entiende historias. WhisperX entiende tiempo. El sistema conecta ambos."**
