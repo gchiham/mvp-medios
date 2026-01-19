@@ -8,7 +8,7 @@
 - Cortar audio de forma **exacta, reproducible y auditable**
 - Generar **resúmenes confiables**, corregidos editorialmente
 
-El sistema prioriza **coherencia narrativa** sobre pureza acústica y está pensado para escalar.
+El sistema prioriza **coherencia narrativa** sobre pureza acústica y está diseñado para escalar.
 
 ---
 
@@ -16,19 +16,19 @@ El sistema prioriza **coherencia narrativa** sobre pureza acústica y está pens
 
 Resolver un problema clásico del monitoreo de medios:
 
-> *“¿Cómo identificar noticias reales dentro de audio continuo y cortarlas exactamente donde empiezan y terminan, sin perder contexto?”*
+> *¿Cómo identificar noticias reales dentro de audio continuo y cortarlas exactamente donde empiezan y terminan, sin perder contexto?*
 
 Este proyecto responde a eso usando:
-- **WhisperX** para tiempo real por palabra
-- **LLM** para análisis narrativo (no para tiempo)
-- **Reglas determinísticas** para decisiones finales
-- **Diccionario controlado** para corrección de nombres
+- **WhisperX** para tiempo real por palabra  
+- **LLM** para análisis narrativo (no para tiempo)  
+- **Reglas determinísticas** para decisiones finales  
+- **Diccionario controlado** para corrección de nombres  
 
 ---
 
 ## 🧠 Principios de diseño (no negociables)
 
-Estas reglas definen todo el sistema:
+Estas reglas gobiernan todo el sistema:
 
 1. **La palabra es la unidad mínima de verdad**
 2. **WhisperX es la única fuente de tiempo**
@@ -42,22 +42,30 @@ Estas reglas definen todo el sistema:
 
 ---
 
-## 🔁 Flujo general del sistema
+## 🔁 Flujo del sistema
+
+1. **Audio crudo** 2. **Transcripción** (WhisperX, palabra por palabra)  
+3. **Chunks de palabras** (texto, sin timestamps)  
+4. **Análisis narrativo con LLM** 5. **Reglas automáticas del sistema** 6. **Mapeo palabra → tiempo real** 7. **Clipping exacto de audio** 8. **Resumen final corregido** ---
+
+## 📁 Estructura del proyecto
 
 ```text
-Audio crudo
-  ↓
-Transcripción (WhisperX, palabra por palabra)
-  ↓
-Chunks de palabras (texto, sin timestamps)
-  ↓
-Análisis narrativo con LLM
-  ↓
-Reglas automáticas del sistema
-  ↓
-Mapeo palabra → tiempo real
-  ↓
-Clipping exacto de audio
-  ↓
-Resumen final corregido
-
+mvp-medios/
+│
+├── transcribe_audio.py
+├── chunk_words.py
+├── analyze_narrative_llm.py
+├── apply_rules.py
+├── map_words_to_time.py
+├── clip_audio.py
+├── summarize_news.py
+│
+├── correct_entities.py
+├── dictionary.json
+│
+├── input_audio/
+├── output_clips/
+├── temp/
+│
+└── README.md
