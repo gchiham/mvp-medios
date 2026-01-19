@@ -43,21 +43,21 @@ Estas reglas definen todo el sistema:
 ---
 
 ## 🔁 Flujo general del sistema
-### 🔁 Flujo del sistema
 
-Audio crudo  
-⬇️  
-Transcripción (WhisperX, palabra por palabra)  
-⬇️  
-Chunks de palabras (texto, sin timestamps)  
-⬇️  
-Análisis narrativo con LLM  
-⬇️  
-Reglas automáticas del sistema  
-⬇️  
-Mapeo palabra → tiempo real  
-⬇️  
-Clipping exacto de audio  
-⬇️  
+```text
+Audio crudo
+  ↓
+Transcripción (WhisperX, palabra por palabra)
+  ↓
+Chunks de palabras (texto, sin timestamps)
+  ↓
+Análisis narrativo con LLM
+  ↓
+Reglas automáticas del sistema
+  ↓
+Mapeo palabra → tiempo real
+  ↓
+Clipping exacto de audio
+  ↓
 Resumen final corregido
 
