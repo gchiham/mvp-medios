@@ -75,6 +75,7 @@ mvp-medios/
 ├── temp/
 │
 └── README.md
+```
 
 **Cada archivo tiene una sola responsabilidad clara.**
 
@@ -86,8 +87,13 @@ mvp-medios/
 **Responsabilidad:** Convertir audio continuo en una lista ordenada de palabras con timestamps.**Entrada:** Archivo de audio (radio, TV, podcast)**Salida (Ejemplo):**
 
 JSON
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   [    { "index": 0, "word": "buenos", "start": 0.52, "end": 0.71 },    { "index": 1, "word": "días", "start": 0.72, "end": 0.93 }  ]   `
+**Salida**
+```json
+[
+  { "index": 0, "word": "buenos", "start": 0.52, "end": 0.71 },
+  { "index": 1, "word": "días", "start": 0.72, "end": 0.93 }
+]
+```
 
 **Reglas clave:**
 
@@ -115,9 +121,9 @@ Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQL
 **Rol del LLM:** Identificar dónde empieza y termina cada noticia a nivel narrativo y generar un resumen inicial.**Salida del LLM (Ejemplo):**
 
 JSON
-
-Plain textANTLR4BashCC#CSSCoffeeScriptCMakeDartDjangoDockerEJSErlangGitGoGraphQLGroovyHTMLJavaJavaScriptJSONJSXKotlinLaTeXLessLuaMakefileMarkdownMATLABMarkupObjective-CPerlPHPPowerShell.propertiesProtocol BuffersPythonRRubySass (Sass)Sass (Scss)SchemeSQLShellSwiftSVGTSXTypeScriptWebAssemblyYAMLXML`   [    {      "start_word": 320,      "end_word": 498,      "summary": "Nasri criticó al CNE por el proceso electoral."    }  ]   `
-
+```
+[    {      "start_word": 320,      "end_word": 498,      "summary": "Nasri criticó al CNE por el proceso electoral."    }  ]   `
+```
 **Restricciones:** El LLM entiende historias, no tiempo. No produce timestamps ni decide duración.
 
 ⚙️ 4. Decisiones automáticas del sistema
@@ -176,3 +182,6 @@ Por cada noticia detectada: Clip exacto de audio, Resumen corregido, Inicio y fi
 Este repositorio define un MVP técnico sólido: escalable, auditable, determinista y mantenible.
 
 > **"El LLM entiende historias. WhisperX entiende tiempo. El sistema conecta ambos."**
+
+
+
